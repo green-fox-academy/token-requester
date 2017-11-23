@@ -1,13 +1,19 @@
 from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS
 from github import Github, GithubException
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
 def main():
     return "usage: POST https://token-requester.herokuapp.com/get-token\n{\"username\": \"<Github username>\",\"password\": \"<Github password>\"}"
+
+@app.route('/names')
+def names():
+    return str(os.getenv("GF_EV_SECRET"))
 
 
 @app.route('/tokenpls', methods=['POST'])
